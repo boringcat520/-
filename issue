@@ -1,3 +1,11 @@
 File "/home/zhanglijie/文档/test1.py", line 60, in <module>
     cv2.circle(image, (int(x), int(y)), int(r), (0, 255, 0), 2)
 TypeError: int() argument must be a string, a bytes-like object or a number, not 'tuple'
+
+
+ /bin/python /home/zhanglijie/文档/test3.py
+[ WARN:0@0.030] global /tmp/pip-wheel-u79916uk/opencv-python_ea2489746b3a43bfb3f2b5331b7ab47a/opencv/modules/imgcodecs/src/loadsave.cpp (239) findDecoder imread_('image.jpeg'): can't open/read file: check file path/integrity
+Traceback (most recent call last):
+  File "/home/zhanglijie/文档/test3.py", line 8, in <module>
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+cv2.error: OpenCV(4.6.0) /tmp/pip-wheel-u79916uk/opencv-python_ea2489746b3a43bfb3f2b5331b7ab47a/opencv/modules/imgproc/src/color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cvtColor'
