@@ -1,0 +1,32 @@
+import cv2
+import numpy as np
+
+# 读取图片
+image = cv2.imread("image.jpg")
+
+# 将图像转换为灰度
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+# 运行霍夫圆变换
+circles = cv2.HoughCircles(
+    gray, cv2.HOUGH_GRADIENT, dp=1, minDist=100, param1=50, param2=30, minRadius=0, maxRadius=0
+)
+
+# 如果有圆形被检测到
+if circles is not None:
+    circles = np.uint16(np.around(circles))
+
+    # 遍历检测到的圆形
+    for circle in circles[0, :]:
+        # 提取圆形的参数
+        center = (circle[0], circle[1])
+        radius = circle[2]
+
+        # 绘制圆形的边界和中心
+        cv2.circle(image, center, radius, (0, 0, 255), 2)
+        cv2.circle(image, center, 2, (0, 255, 0), 3)
+
+# 显示图像
+cv2.imshow("Image", image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
