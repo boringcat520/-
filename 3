@@ -1,0 +1,36 @@
+import numpy as np
+import cv2
+from matplotlib import pyplot as plt
+
+# 创建摄像头对象
+camera = cv2.VideoCapture(0)
+
+while True:
+    # 读取摄像头画面
+    ret, frame = camera.read()
+    
+    # 进行圆形检测的代码
+    image = frame.copy()
+    filter = cv2.pyrMeanShiftFiltering(image, 10, 100)
+    filter_gray = cv2.cvtColor(filter, cv2.COLOR_BGR2GRAY)
+    circles = cv2.HoughCircles(filter_gray, cv2.HOUGH_GRADIENT, 1, 20, param1=100, param2=50, minRadius=0, maxRadius=0)
+    
+    # 在画面中绘制检测到的圆形
+    if circles is not None:
+        circles = np.uint16(np.around(circles))
+        for circle in circles[0, :]:
+            cv2.circle(image, (circle[0], circle[1]), circle[2], (0, 0, 255), 2)
+            cv2.circle(image, (circle[0], circle[1]), 2, (255, 0, 0), 2)
+    
+    # 显示画面
+    cv2.imshow("Camera", image)
+    
+    # 按下ESC键退出循环
+    if cv2.waitKey(1) == 27:
+        break
+
+# 释放摄像头资源
+camera.release()
+
+# 关闭所有窗口
+cv2.destroyAllWindows()
